@@ -5,7 +5,7 @@ class Forecast {
   constructor(weatherData) {
     this.location = weatherData.name;
     let tempData = new Kelvin(weatherData.main.temp).toCelcius();
-    this.temp = tempData;
+    this.temp = Math.round(tempData.value * 10) / 10;
   }
 }
 
