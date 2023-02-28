@@ -1,3 +1,9 @@
+class Forecast {
+  constructor(weatherData) {
+    this.location = weatherData.name;
+  }
+}
+
 const weather = (() => {
   const retrieveWeather = async () => {
     // let searchTerm = `${search.value}`;
@@ -10,7 +16,13 @@ const weather = (() => {
     `, {mode: 'cors'})
     const data = await query.json();
     console.log(data);
+    parseWeather(data);
   }
+  const parseWeather = (data) => {
+    let forecast = new Forecast(data);
+    console.log(forecast);
+  };
+
   return { retrieveWeather };
 })();
 
