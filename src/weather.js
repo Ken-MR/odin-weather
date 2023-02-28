@@ -1,15 +1,26 @@
 import './style.css';
 import { Celcius, Fahrenheit, Kelvin } from '@khanisak/temperature-converter';
 
-class Forecast {
-  constructor(weatherData) {
-    this.location = weatherData.name;
-    let tempData = new Kelvin(weatherData.main.temp).toCelcius();
-    this.temp = Math.round(tempData.value * 10) / 10;
-  }
-}
-
 const weather = (() => {
+  let forecast;
+
+  class Forecast {
+    constructor(weatherData) {
+      this.location = weatherData.location.name;
+      this.weather = weatherData.current.condition.text;
+      this.tempF = weatherData.current.temp_f;
+      this.tempC = weatherData.current.temp_c;
+      this.timeRetrieved = weatherData.location.localtime;
+  
+      this.feelsLikeF = weatherData.current.feelslike_f;
+      this.feelsLikeC = weatherData.current.feelslike_c;
+
+      this.humid = weatherData.current.humidity;
+      //this.rainChance = weatherData.
+      this.wind = [weatherData.current.wind_mph, weatherData.current.wind_kph, weatherData.current.wind_dir];
+    }
+  }
+
   const retrieveWeather = async () => {
     // let searchTerm = `${search.value}`;
     let searchTerm;
@@ -17,18 +28,18 @@ const weather = (() => {
       searchTerm = 'New York';
     }
     const weatherPage = document.getElementById('weather-page');
-    const query = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&APPID=55ef89a82f7996b6a371e494df3d95f8
-    `, {mode: 'cors'})
+    const query = await fetch(`http://api.weatherapi.com/v1/current.json?key=e3b792acc4dc4d7593b232955232802&q=${searchTerm}`, {mode: 'cors'})
     const data = await query.json();
     console.log(data);
     parseWeather(data);
   }
+
   const parseWeather = (data) => {
-    let forecast = new Forecast(data);
+    forecast = new Forecast(data);
     console.log(forecast);
   };
 
-  return { retrieveWeather };
+  return { retrieveWeather, forecast};
 })();
 
 weather.retrieveWeather();
