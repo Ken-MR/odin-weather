@@ -4,7 +4,8 @@ import { Celcius, Fahrenheit, Kelvin } from '@khanisak/temperature-converter';
 class Forecast {
   constructor(weatherData) {
     this.location = weatherData.name;
-    this.temp = new Kelvin(weatherData.main.temp).toCelcius();
+    let tempData = new Kelvin(weatherData.main.temp).toCelcius();
+    this.temp = tempData;
   }
 }
 
