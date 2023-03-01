@@ -10,14 +10,44 @@ const weather = (() => {
       this.weather = weatherData.current.condition.text;
       this.tempF = weatherData.current.temp_f;
       this.tempC = weatherData.current.temp_c;
-      this.timeRetrieved = weatherData.location.localtime;
+      this.time = weatherData.location.localtime;
   
       this.feelsLikeF = weatherData.current.feelslike_f;
       this.feelsLikeC = weatherData.current.feelslike_c;
 
       this.humid = weatherData.current.humidity;
-      //this.rainChance = weatherData.
       this.wind = [weatherData.current.wind_mph, weatherData.current.wind_kph, weatherData.current.wind_dir];
+    
+      this.dailyForecast = [];
+      for (let i = 1; i < weatherData.forecast.forecastday.length; i++) {
+        this.dailyForecast.push({
+          'sunRise': weatherData.forecast.forecastday[i].astro.sunrise,
+          'sunSet': weatherData.forecast.forecastday[i].astro.sunset,
+          'moonPhase': weatherData.forecast.forecastday[i].astro.moon_phase,
+  
+          'tempC': weatherData.forecast.forecastday[i].day.avgtemp_c,
+          'tempF': weatherData.forecast.forecastday[i].day.avgtemp_f,
+          'date': weatherData.forecast.forecastday[i].date,
+          'weatherType': weatherData.forecast.forecastday[i].day.condition.icon
+        });
+      }
+
+      let currentHour = parseInt(weatherData.location.localtime.substr(11,2));
+      let dayTracker = 0;
+      this.hourlyForecast = [];
+      for (let i = 0; i < 8; i++) {
+        if (currentHour >= 24) {
+          currentHour = 0;
+          dayTracker++;
+        }
+        this.hourlyForecast.push({
+          'time': weatherData.forecast.forecastday[dayTracker].hour[currentHour].time,
+          'temp_c': weatherData.forecast.forecastday[dayTracker].hour[currentHour].temp_c,
+          'temp_f': weatherData.forecast.forecastday[dayTracker].hour[currentHour].temp_f,
+          'weatherType': weatherData.forecast.forecastday[dayTracker].hour[currentHour].condition.icon
+        });
+        currentHour++;
+      }
     }
   }
 
@@ -28,7 +58,8 @@ const weather = (() => {
       searchTerm = 'New York';
     }
     const weatherPage = document.getElementById('weather-page');
-    const query = await fetch(`http://api.weatherapi.com/v1/current.json?key=e3b792acc4dc4d7593b232955232802&q=${searchTerm}`, {mode: 'cors'})
+    const query = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=e3b792acc4dc4d7593b232955232802&q=${searchTerm}&days=8&aqi=no&alerts=no
+    `, {mode: 'cors'});
     const data = await query.json();
     console.log(data);
     parseWeather(data);
