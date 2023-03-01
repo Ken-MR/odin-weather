@@ -1,12 +1,13 @@
+export let forecast;
+
 export const weather = (() => {
-  let forecast;
-  let currentTimeFrame = 'daily';
-  let currentTempUnit = 'F';
+  //let forecast;
 
   class Forecast {
     constructor(weatherData) {
       this.location = [weatherData.location.name, weatherData.location.region, weatherData.location.country];
       this.weather = weatherData.current.condition.text;
+      this.icon = weatherData.current.condition.icon;
       this.tempF = weatherData.current.temp_f;
       this.tempC = weatherData.current.temp_c;
       this.time = weatherData.location.localtime;
@@ -59,12 +60,12 @@ export const weather = (() => {
       searchTerm = search.value;
     }
     console.log(searchTerm);
-    const weatherPage = document.getElementById('weather-page');
     const query = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=e3b792acc4dc4d7593b232955232802&q=${searchTerm}&days=8&aqi=no&alerts=no
     `, {mode: 'cors'});
     const data = await query.json();
     console.log(data);
     parseWeather(data);
+    console.log(forecast.weather);
   }
 
   const parseWeather = (data) => {
@@ -72,7 +73,5 @@ export const weather = (() => {
     console.log(forecast);
   };
 
-  return { retrieveWeather, forecast};
+  return { retrieveWeather };
 })();
-
-weather.retrieveWeather();
