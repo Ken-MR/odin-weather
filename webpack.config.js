@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/weather.js',
+  entry: './src/page-control.js',
   devtool: 'inline-source-map',
   output: {
       filename: 'main.js',

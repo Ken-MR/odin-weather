@@ -1,12 +1,11 @@
-import './style.css';
-import { Celcius, Fahrenheit, Kelvin } from '@khanisak/temperature-converter';
-
-const weather = (() => {
+export const weather = (() => {
   let forecast;
+  let currentTimeFrame = 'daily';
+  let currentTempUnit = 'F';
 
   class Forecast {
     constructor(weatherData) {
-      this.location = weatherData.location.name;
+      this.location = [weatherData.location.name, weatherData.location.region, weatherData.location.country];
       this.weather = weatherData.current.condition.text;
       this.tempF = weatherData.current.temp_f;
       this.tempC = weatherData.current.temp_c;
@@ -51,12 +50,15 @@ const weather = (() => {
     }
   }
 
+  let searchTerm;
   const retrieveWeather = async () => {
-    // let searchTerm = `${search.value}`;
-    let searchTerm;
     if (!searchTerm) {
       searchTerm = 'New York';
     }
+    else {
+      searchTerm = search.value;
+    }
+    console.log(searchTerm);
     const weatherPage = document.getElementById('weather-page');
     const query = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=e3b792acc4dc4d7593b232955232802&q=${searchTerm}&days=8&aqi=no&alerts=no
     `, {mode: 'cors'});
