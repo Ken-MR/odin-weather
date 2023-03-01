@@ -8,13 +8,45 @@
     <title>Weather Tracker</title>
   </head>
   <body>
-    <div id="weather-page"></div>
-    <form id="town-search" onsubmit="event.preventDefault()">
-      <div>
-        <input type="search" id="search" name="search" required>
-        <i>search icon</i>
+    <div id="weather-page">
+      <div class="info-bar main">
+        <h1 class="main-info" id="weather"></h1>
+        <h2 class="main-info" id="location"></h2>
+        <p class="main-info" id="time"></p>
+        <h1 class="main-info" id="temp"></h1>
+        <div>
+          <button class="main-info" id="temp-conversion" onclick="convertTemp()">Convert to F</button>
+        </div>
+        <img class="main-info" id="weather-icon">
+        <form class="main-info" id="town-search" onsubmit="event.preventDefault()">
+          <div>
+            <input type="search" id="search" name="search" required>
+            <i>search icon</i>
+          </div>
+          <input type="submit" id="submit" name="submit" value="submit">
+        </form>
       </div>
-      <input type="submit" id="submit" name="submit" value="submit">
-    </form>
+      <div class="info-bar sub">
+        <div class="weather-card" id="feels-like">
+          <div class="icon">Icon</div>
+          <div class="weather-data">Feels like</div>
+        </div>
+        <div class="weather-card" id="humidity">
+          <div class="icon">Icon</div>
+          <div class="weather-data">Humidity</div>
+        </div>
+        <div class="weather-card" id="wind-speed">
+          <div class="icon">Icon</div>
+          <div class="weather-data">Wind Speed</div>
+        </div>
+      </div>
+      <div id="time-cards">
+        <div id="time-frame">
+          <button id="hourlyTime" onclick="displayTime('hourly')">Hourly</button>
+          <button id="daysTime" onclick="displayTime('daily')">Daily</button>
+        </div>
+        Time Cards
+      </div>
+    </div>
   </body>
 </html
