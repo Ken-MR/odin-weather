@@ -48,6 +48,7 @@ h1, h2, p {
   color:transparent;
   cursor:default;
   color: black;
+  cursor: text;
 }
 
 #search:focus {
@@ -88,7 +89,7 @@ h1, h2, p {
 .weather-data {
   display: flex;
   flex-direction: column;
-  align-items: right;
+  text-align: right;
 }
 
 #forecast {
