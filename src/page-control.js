@@ -1,6 +1,6 @@
 import './style.css';
 import { weather, forecast } from './weather.js';
-import { getDay, parseISO } from 'date-fns';
+import { getDay, getHours, parseISO } from 'date-fns';
 
 let currentTimeFrame = 'daily';
 let currentTempUnit = 'F';
@@ -70,6 +70,7 @@ const DOMControl = (() => {
         forecastElement.appendChild(forecastTime);
         forecastElement.appendChild(forecastTemp);
         forecastElement.setAttribute('class', 'day-card');
+
         let day = dayOfWeek(getDay(parseISO(forecast.dailyForecast[i].date)));
         forecastTime.appendChild(document.createTextNode(day));
         (currentTempUnit === 'F' ? 
@@ -88,7 +89,8 @@ const DOMControl = (() => {
         forecastElement.appendChild(forecastTemp);
         forecastElement.setAttribute('class', 'hour-card');
 
-        forecastTime.appendChild(document.createTextNode(forecast.hourlyForecast[i].time));
+        let hour = hourOfDay(getHours(parseISO(forecast.hourlyForecast[i].time)));
+        forecastTime.appendChild(document.createTextNode(hour));
         (currentTempUnit === 'F' ? 
         forecastTemp.appendChild(document.createTextNode(`${forecast.hourlyForecast[i].tempF} °F`)) 
         : forecastTemp.appendChild(document.createTextNode(`${forecast.hourlyForecast[i].tempC} °C`)));
@@ -144,6 +146,20 @@ const DOMControl = (() => {
       case 4: return 'Thursday';
       case 5: return 'Friday';
       case 6: return 'Saturday';
+    }
+  }
+  const hourOfDay = (time) => {
+    if (time === 0) {
+      return '12 AM';
+    }
+    else if (time === 12) {
+      return '12 PM';
+    }
+    else if (time > 12) {
+      return `${time-12} PM`;
+    }
+    else {
+      return `${time} AM`;
     }
   }
   return { pageUpdates, convertTemp, displayTime };
