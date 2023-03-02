@@ -15,6 +15,7 @@ const DOMControl = (() => {
       await weather.retrieveWeather();
     }
     weatherDisplay();
+    generateForecastCards();
   }
 
   const weatherDisplay = () => {
@@ -27,8 +28,6 @@ const DOMControl = (() => {
     let feelsLikeInfo = document.getElementById("feels-like");
     let humidityInfo = document.getElementById("humidity");
     let windSpeedInfo = document.getElementById("wind-speed");
-
-    let timeCards = document.getElementById("time-cards");
 
     for (let i = 0; i < forecast.location.length; i++) {
       locationInfo.appendChild(document.createTextNode(`${forecast.location[i]}`));
@@ -51,7 +50,12 @@ const DOMControl = (() => {
       feelsLikeInfo.appendChild(document.createTextNode(`${forecast.feelsLikeC} °C`));
       windSpeedInfo.appendChild(document.createTextNode(`${forecast.wind[1]} kph`));
     }
-
+  }
+  const generateForecastCards = () => {
+    let timeCards = document.getElementById("time-cards");
+    while (timeCards.firstChild) {
+      timeCards.removeChild(timeCards.lastChild);
+    }
     if (currentTimeFrame === 'daily') {
       for (let i = 0; i < forecast.dailyForecast.length; i++) {
         let forecastElement = document.createElement('div');
@@ -69,7 +73,23 @@ const DOMControl = (() => {
         timeCards.appendChild(forecastElement);
       }
     }
+    else {
+      for (let i = 0; i < forecast.hourlyForecast.length; i++) {
+        let forecastElement = document.createElement('div');
+        let forecastTime = document.createElement('p');
+        let forecastTemp = document.createElement('h1');
 
+        forecastElement.appendChild(forecastTime);
+        forecastElement.appendChild(forecastTemp);
+        forecastElement.setAttribute('class', 'hour-card');
+
+        forecastTime.appendChild(document.createTextNode(forecast.dailyForecast[i].date));
+        (currentTempUnit === 'F' ? 
+        forecastTemp.appendChild(document.createTextNode(`${forecast.dailyForecast[i].tempF} °F`)) 
+        : forecastTemp.appendChild(document.createTextNode(`${forecast.dailyForecast[i].tempC} °C`)));
+        timeCards.appendChild(forecastElement);
+      }
+    }
   }
   return { pageUpdates };
 })();

@@ -76,7 +76,7 @@ h1, h2, p {
   outline: none;
 }
 
-.day-card {
+.day-card, .hour-card {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
