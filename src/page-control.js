@@ -1,4 +1,7 @@
 import './style.css';
+import thermometerIcon from './thermometer.png';
+import humidityIcon from './humidity.png';
+import windIcon from './wind.png';
 import { weather, forecast } from './weather.js';
 import { getDay, getHours, parseISO } from 'date-fns';
 
@@ -34,6 +37,12 @@ const DOMControl = (() => {
     let humidityInfo = document.getElementById("humidity");
     let windSpeedInfo = document.getElementById("wind-speed");
 
+    let iconList = document.querySelectorAll(".icon");
+
+    iconList[0].src = thermometerIcon;
+    iconList[1].src = humidityIcon;
+    iconList[2].src = windIcon;
+
     for (let i = 0; i < forecast.location.length; i++) {
       locationInfo.appendChild(document.createTextNode(`${forecast.location[i]}`));
       locationInfo.appendChild(document.createElement('br'));
@@ -56,6 +65,7 @@ const DOMControl = (() => {
       windSpeedInfo.appendChild(document.createTextNode(`${forecast.wind[1]} kph`));
     }
   }
+
   const generateForecastCards = () => {
     let timeCards = document.getElementById("time-cards");
     while (timeCards.firstChild) {
@@ -66,9 +76,11 @@ const DOMControl = (() => {
         let forecastElement = document.createElement('div');
         let forecastTime = document.createElement('p');
         let forecastTemp = document.createElement('h1');
+        let forecastIcon = document.createElement('img');
 
         forecastElement.appendChild(forecastTime);
         forecastElement.appendChild(forecastTemp);
+        forecastElement.appendChild(forecastIcon);
         forecastElement.setAttribute('class', 'day-card');
 
         let day = dayOfWeek(getDay(parseISO(forecast.dailyForecast[i].date)));
@@ -76,6 +88,7 @@ const DOMControl = (() => {
         (currentTempUnit === 'F' ? 
         forecastTemp.appendChild(document.createTextNode(`${forecast.dailyForecast[i].tempF} °F`)) 
         : forecastTemp.appendChild(document.createTextNode(`${forecast.dailyForecast[i].tempC} °C`)));
+        forecastIcon.src = forecast.dailyForecast[i].weatherType;
         timeCards.appendChild(forecastElement);
       }
     }
@@ -84,9 +97,11 @@ const DOMControl = (() => {
         let forecastElement = document.createElement('div');
         let forecastTime = document.createElement('p');
         let forecastTemp = document.createElement('h1');
+        let forecastIcon = document.createElement('img');
 
         forecastElement.appendChild(forecastTime);
         forecastElement.appendChild(forecastTemp);
+        forecastElement.appendChild(forecastIcon);
         forecastElement.setAttribute('class', 'hour-card');
 
         let hour = hourOfDay(getHours(parseISO(forecast.hourlyForecast[i].time)));
@@ -94,10 +109,12 @@ const DOMControl = (() => {
         (currentTempUnit === 'F' ? 
         forecastTemp.appendChild(document.createTextNode(`${forecast.hourlyForecast[i].tempF} °F`)) 
         : forecastTemp.appendChild(document.createTextNode(`${forecast.hourlyForecast[i].tempC} °C`)));
+        forecastIcon.src = forecast.hourlyForecast[i].weatherType;
         timeCards.appendChild(forecastElement);
       }
     }
   }
+
   const convertTemp = () => {
     let button = document.getElementById('temp-conversion');
     let tempInfo = document.getElementById("temp");
@@ -122,6 +139,7 @@ const DOMControl = (() => {
     }
     generateForecastCards();
   }
+
   const displayTime = () => {
     let hourBTN = document.getElementById('hourly-time');
     let dayBTN = document.getElementById('days-time');
@@ -137,6 +155,7 @@ const DOMControl = (() => {
     }
     generateForecastCards();
   }
+
   const dayOfWeek = (date) => {
     switch (date) {
       case 0: return 'Sunday';
@@ -148,6 +167,7 @@ const DOMControl = (() => {
       case 6: return 'Saturday';
     }
   }
+
   const hourOfDay = (time) => {
     if (time === 0) {
       return '12 AM';
