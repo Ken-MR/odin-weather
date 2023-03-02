@@ -59,13 +59,11 @@ export const weather = (() => {
     else {
       searchTerm = search.value;
     }
-    console.log(searchTerm);
     const query = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=e3b792acc4dc4d7593b232955232802&q=${searchTerm}&days=8&aqi=no&alerts=no
     `, {mode: 'cors'});
     const data = await query.json();
     console.log(data);
     parseWeather(data);
-    console.log(forecast.weather);
   }
 
   const parseWeather = (data) => {

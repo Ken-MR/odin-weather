@@ -26,6 +26,12 @@ const DOMControl = (() => {
     generateForecastCards();
   }
 
+  const eraseChildren = (element) => {
+    while (element.firstChild) {
+      element.removeChild(element.lastChild);
+    }
+  };
+
   const weatherDisplay = () => {
     let weatherInfo = document.getElementById("weather");
     let locationInfo = document.getElementById("location");
@@ -36,6 +42,15 @@ const DOMControl = (() => {
     let feelsLikeInfo = document.getElementById("feels-like");
     let humidityInfo = document.getElementById("humidity");
     let windSpeedInfo = document.getElementById("wind-speed");
+
+    eraseChildren(weatherInfo);
+    eraseChildren(locationInfo);
+    eraseChildren(timeInfo);
+    eraseChildren(tempInfo);
+
+    eraseChildren(feelsLikeInfo);
+    eraseChildren(humidityInfo);
+    eraseChildren(windSpeedInfo);
 
     let iconList = document.querySelectorAll(".icon");
 
@@ -68,9 +83,7 @@ const DOMControl = (() => {
 
   const generateForecastCards = () => {
     let timeCards = document.getElementById("time-cards");
-    while (timeCards.firstChild) {
-      timeCards.removeChild(timeCards.lastChild);
-    }
+    eraseChildren(timeCards);
     if (currentTimeFrame === 'daily') {
       for (let i = 0; i < forecast.dailyForecast.length; i++) {
         let forecastElement = document.createElement('div');

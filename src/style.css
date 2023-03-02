@@ -39,6 +39,35 @@ h1, h2, p {
   outline: none;
 }
 
+#search {
+  background-color: transparent;
+  border: 0px;
+  outline: none;
+  border-bottom: 3px solid gray;
+  box-shadow: none;
+  color:transparent;
+  cursor:default;
+  color: black;
+}
+
+#search:focus {
+  background-color: rgba(252, 252, 252, 0.1);
+}
+
+.material-icons {
+  position: relative;
+  top: 10px;
+}
+
+#submit {
+  background: transparent;
+  border: 0;
+}
+
+.material-icons {
+  cursor: pointer;
+}
+
 .sub {
   grid-column: 3 / -1;
   grid-row: 1 / 2;
