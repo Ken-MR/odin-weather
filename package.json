@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/Ken-MR/odin-weather#readme",
   "dependencies": {
-    "@khanisak/temperature-converter": "^2.0.1"
+    "@khanisak/temperature-converter": "^2.0.1",
+    "date-fns": "^2.29.3",
+    "save": "^2.9.0"
   },
   "devDependencies": {
     "css-loader": "^6.7.3",

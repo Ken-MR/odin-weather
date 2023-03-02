@@ -1,5 +1,6 @@
 import './style.css';
 import { weather, forecast } from './weather.js';
+import { getDay, parseISO } from 'date-fns';
 
 let currentTimeFrame = 'daily';
 let currentTempUnit = 'F';
@@ -38,7 +39,7 @@ const DOMControl = (() => {
       locationInfo.appendChild(document.createElement('br'));
     }
     weatherInfo.appendChild(document.createTextNode(`${forecast.weather}`));
-    timeInfo.appendChild(document.createTextNode(`${forecast.time}`));
+    timeInfo.appendChild(document.createTextNode(`Retrieved: ${forecast.time}`));
     icon.src = forecast.icon;
 
     humidityInfo.appendChild(document.createTextNode(`${forecast.humid} %`));
@@ -69,8 +70,8 @@ const DOMControl = (() => {
         forecastElement.appendChild(forecastTime);
         forecastElement.appendChild(forecastTemp);
         forecastElement.setAttribute('class', 'day-card');
-
-        forecastTime.appendChild(document.createTextNode(forecast.dailyForecast[i].date));
+        let day = dayOfWeek(getDay(parseISO(forecast.dailyForecast[i].date)));
+        forecastTime.appendChild(document.createTextNode(day));
         (currentTempUnit === 'F' ? 
         forecastTemp.appendChild(document.createTextNode(`${forecast.dailyForecast[i].tempF} °F`)) 
         : forecastTemp.appendChild(document.createTextNode(`${forecast.dailyForecast[i].tempC} °C`)));
@@ -133,6 +134,17 @@ const DOMControl = (() => {
       dayBTN.disabled = true;
     }
     generateForecastCards();
+  }
+  const dayOfWeek = (date) => {
+    switch (date) {
+      case 0: return 'Sunday';
+      case 1: return 'Monday';
+      case 2: return 'Tuesday';
+      case 3: return 'Wednesday';
+      case 4: return 'Thursday';
+      case 5: return 'Friday';
+      case 6: return 'Saturday';
+    }
   }
   return { pageUpdates, convertTemp, displayTime };
 })();
