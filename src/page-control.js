@@ -65,7 +65,6 @@ const DOMControl = (() => {
     eraseChildren(moonPhaseInfo);
 
     let iconList = document.querySelectorAll(".icon");
-
     iconList[0].src = thermometerIcon;
     iconList[1].src = rainIcon;
     iconList[2].src = humidityIcon;
