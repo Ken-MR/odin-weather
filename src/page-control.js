@@ -1,7 +1,11 @@
 import './style.css';
-import thermometerIcon from './thermometer.png';
-import humidityIcon from './humidity.png';
-import windIcon from './wind.png';
+import thermometerIcon from './img/thermometer.png';
+import rainIcon from './img/rainfall.png';
+import humidityIcon from './img/humidity.png';
+import windIcon from './img/wind.png';
+import sunRiseIcon from './img/sunrise.png';
+import sunSetIcon from './img/sunset.png';
+import moonPhaseIcon from './img/moon.png';
 import { weather, forecast } from './weather.js';
 import { getDay, getHours, parseISO } from 'date-fns';
 
@@ -40,8 +44,12 @@ const DOMControl = (() => {
     let icon = document.getElementById("weather-icon");
 
     let feelsLikeInfo = document.getElementById("feels-like");
+    let chanceOfRainInfo = document.getElementById("rain-chance");
     let humidityInfo = document.getElementById("humidity");
     let windSpeedInfo = document.getElementById("wind-speed");
+    let sunRiseInfo = document.getElementById("sun-rise");
+    let sunSetInfo = document.getElementById("sun-set");
+    let moonPhaseInfo = document.getElementById("moon-phase");
 
     eraseChildren(weatherInfo);
     eraseChildren(locationInfo);
@@ -49,20 +57,32 @@ const DOMControl = (() => {
     eraseChildren(tempInfo);
 
     eraseChildren(feelsLikeInfo);
+    eraseChildren(chanceOfRainInfo);
     eraseChildren(humidityInfo);
     eraseChildren(windSpeedInfo);
+    eraseChildren(sunRiseInfo);
+    eraseChildren(sunSetInfo);
+    eraseChildren(moonPhaseInfo);
 
     let iconList = document.querySelectorAll(".icon");
 
     iconList[0].src = thermometerIcon;
-    iconList[1].src = humidityIcon;
-    iconList[2].src = windIcon;
+    iconList[1].src = rainIcon;
+    iconList[2].src = humidityIcon;
+    iconList[3].src = windIcon;
+    iconList[4].src = sunRiseIcon;
+    iconList[5].src = sunSetIcon;
+    iconList[6].src = moonPhaseIcon;
 
     for (let i = 0; i < forecast.location.length; i++) {
       locationInfo.appendChild(document.createTextNode(`${forecast.location[i]}`));
       locationInfo.appendChild(document.createElement('br'));
     }
     weatherInfo.appendChild(document.createTextNode(`${forecast.weather}`));
+    chanceOfRainInfo.appendChild(document.createTextNode(`${forecast.rainChance} %`));
+    sunRiseInfo.appendChild(document.createTextNode(`${forecast.sunRise}`));
+    sunSetInfo.appendChild(document.createTextNode(`${forecast.sunSet}`));
+    moonPhaseInfo.appendChild(document.createTextNode(`${forecast.moonPhase}`));
     timeInfo.appendChild(document.createTextNode(`Retrieved: ${forecast.time}`));
     icon.src = forecast.icon;
 

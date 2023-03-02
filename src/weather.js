@@ -14,10 +14,13 @@ export const weather = (() => {
   
       this.feelsLikeF = weatherData.current.feelslike_f;
       this.feelsLikeC = weatherData.current.feelslike_c;
-
+      this.rainChance = weatherData.forecast.forecastday[0].day.daily_chance_of_rain;
+      this.sunRise = weatherData.forecast.forecastday[0].astro.sunrise;
+      this.sunSet = weatherData.forecast.forecastday[0].astro.sunset;
+      this.moonPhase = weatherData.forecast.forecastday[0].astro.moon_phase;
       this.humid = weatherData.current.humidity;
       this.wind = [weatherData.current.wind_mph, weatherData.current.wind_kph, weatherData.current.wind_dir];
-    
+
       this.dailyForecast = [];
       for (let i = 1; i < weatherData.forecast.forecastday.length; i++) {
         this.dailyForecast.push({
