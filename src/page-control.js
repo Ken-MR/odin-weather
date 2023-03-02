@@ -8,6 +8,9 @@ window.onload = () => {
   document.getElementById("town-search").addEventListener("submit", () => {DOMControl.pageUpdates('new')});
   DOMControl.pageUpdates('new')
   document.getElementById("temp-conversion").addEventListener("click", () => {DOMControl.convertTemp();});
+  document.getElementById("hourly-time").addEventListener("click", () => {DOMControl.displayTime();});
+  document.getElementById("days-time").addEventListener("click", () => {DOMControl.displayTime();});
+  document.getElementById("days-time").disabled = true;
 };
 
 const DOMControl = (() => {
@@ -116,5 +119,20 @@ const DOMControl = (() => {
     }
     generateForecastCards();
   }
-  return { pageUpdates, convertTemp };
+  const displayTime = () => {
+    let hourBTN = document.getElementById('hourly-time');
+    let dayBTN = document.getElementById('days-time');
+    if (currentTimeFrame === 'daily') {
+      currentTimeFrame = 'hourly';
+      hourBTN.disabled = true;
+      dayBTN.disabled = false;
+    }
+    else {
+      currentTimeFrame = 'daily';
+      hourBTN.disabled = false;
+      dayBTN.disabled = true;
+    }
+    generateForecastCards();
+  }
+  return { pageUpdates, convertTemp, displayTime };
 })();

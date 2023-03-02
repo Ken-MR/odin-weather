@@ -67,7 +67,7 @@ h1, h2, p {
   justify-content: space-around;
 }
 
-#hourlyTime, #daysTime {
+#hourly-time, #days-time {
   background-color: transparent;
   background-repeat: no-repeat;
   border: none;
