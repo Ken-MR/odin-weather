@@ -42,8 +42,8 @@ export const weather = (() => {
         }
         this.hourlyForecast.push({
           'time': weatherData.forecast.forecastday[dayTracker].hour[currentHour].time,
-          'temp_c': weatherData.forecast.forecastday[dayTracker].hour[currentHour].temp_c,
-          'temp_f': weatherData.forecast.forecastday[dayTracker].hour[currentHour].temp_f,
+          'tempC': weatherData.forecast.forecastday[dayTracker].hour[currentHour].temp_c,
+          'tempF': weatherData.forecast.forecastday[dayTracker].hour[currentHour].temp_f,
           'weatherType': weatherData.forecast.forecastday[dayTracker].hour[currentHour].condition.icon
         });
         currentHour++;

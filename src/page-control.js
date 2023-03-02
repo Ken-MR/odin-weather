@@ -7,6 +7,7 @@ let currentTempUnit = 'F';
 window.onload = () => {
   document.getElementById("town-search").addEventListener("submit", () => {DOMControl.pageUpdates('new')});
   DOMControl.pageUpdates('new')
+  document.getElementById("temp-conversion").addEventListener("click", () => {DOMControl.convertTemp();});
 };
 
 const DOMControl = (() => {
@@ -83,13 +84,37 @@ const DOMControl = (() => {
         forecastElement.appendChild(forecastTemp);
         forecastElement.setAttribute('class', 'hour-card');
 
-        forecastTime.appendChild(document.createTextNode(forecast.dailyForecast[i].date));
+        forecastTime.appendChild(document.createTextNode(forecast.hourlyForecast[i].time));
         (currentTempUnit === 'F' ? 
-        forecastTemp.appendChild(document.createTextNode(`${forecast.dailyForecast[i].tempF} °F`)) 
-        : forecastTemp.appendChild(document.createTextNode(`${forecast.dailyForecast[i].tempC} °C`)));
+        forecastTemp.appendChild(document.createTextNode(`${forecast.hourlyForecast[i].tempF} °F`)) 
+        : forecastTemp.appendChild(document.createTextNode(`${forecast.hourlyForecast[i].tempC} °C`)));
         timeCards.appendChild(forecastElement);
       }
     }
   }
-  return { pageUpdates };
+  const convertTemp = () => {
+    let button = document.getElementById('temp-conversion');
+    let tempInfo = document.getElementById("temp");
+    let feelsLikeInfo = document.getElementById("feels-like");
+    let windSpeedInfo = document.getElementById("wind-speed");
+
+    if (currentTempUnit === 'F') {
+      button.textContent = 'Convert to F';
+      currentTempUnit = 'C'
+
+      tempInfo.textContent = `${forecast.tempC} °C`;
+      feelsLikeInfo.textContent = `${forecast.feelsLikeC} °C`;
+      windSpeedInfo.textContent = `${forecast.wind[2]} ${forecast.wind[1]} kph`;
+    }
+    else {
+      button.textContent = 'Convert to C';
+      currentTempUnit = 'F'
+
+      tempInfo.textContent = `${forecast.tempF} °F`;
+      feelsLikeInfo.textContent = `${forecast.feelsLikeF} °F`;
+      windSpeedInfo.textContent = `${forecast.wind[2]} ${forecast.wind[0]} mph`;
+    }
+    generateForecastCards();
+  }
+  return { pageUpdates, convertTemp };
 })();
