@@ -8,6 +8,10 @@ body {
   background-attachment: scroll;
 }
 
+button {
+  color: white;
+}
+
 h1, h2, p {
   padding: 0px;
   margin: 0px;
