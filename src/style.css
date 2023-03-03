@@ -269,3 +269,127 @@ h1, h2, p {
     width: 95%;
   }
 }
+
+@media only screen and (min-device-width : 200px) and (max-device-width : 400px) {
+  body {
+    background-size: auto;
+    height: 100vh;
+  }
+
+  #weather-icon {
+    width: 50px;
+    height: auto;
+  }
+
+  #town-search {
+    width: 70px;
+  }
+
+  .material-icons {
+    width: 16px;
+    height: auto;
+  }
+
+  #search {
+    font-size: 70%;
+  }
+
+  #buttons {
+    width: 70%;
+    height: 70%;
+  }
+
+  .main-info {
+    font-size: 70%;
+  }
+
+  #weather-page {
+    padding: 5px;
+    grid-template-columns: 1fr 0.7fr 1fr;
+    grid-template-rows: 0.8fr 1fr;
+  }
+
+  .weather-card {
+    width: 125px;
+    position: relative;
+    right: 10px;
+  }
+
+  .main {
+    gap: 8px;
+    max-height: 250px;
+  }
+
+  .sub {
+    gap:8px;
+    max-height: 250px;
+  }
+
+  .weather-card > div > h2 {
+    font-size: 70%;
+  }
+
+  .weather-card > img {
+    width: 16px;
+    height: 16px;
+  }
+  
+  #time-cards {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 125px;
+  }
+
+  button {
+    font-size: 8px;
+  }
+
+  #temp-conversion {
+    font-size: 8px;
+  }
+
+  #time-cards {
+    font-size: 70%;
+  }
+
+  #time-cards > div > img {
+    height: 24px;
+    width: auto;
+  }
+
+  .day-card, .hour-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 250px;
+  }
+
+  .day-card > p {
+    width: 60px;
+  }
+
+  .hour-card > p {
+    width: 60px;
+  }
+
+  .day-card > h1 {
+    width: 70px;
+  }
+
+  .hour-card > h1 {
+    width: 70px;
+  }
+  
+  #search {
+    width: 95%;
+  }
+
+  .dots {
+    height: 15px;
+    width: 15px;
+  }
+}
