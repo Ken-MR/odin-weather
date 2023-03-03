@@ -38,7 +38,7 @@ export const weather = (() => {
       let currentHour = parseInt(weatherData.location.localtime.substr(11,2));
       let dayTracker = 0;
       this.hourlyForecast = [];
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < 24; i++) {
         if (currentHour >= 24) {
           currentHour = 0;
           dayTracker++;

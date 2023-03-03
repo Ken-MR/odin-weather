@@ -6,11 +6,14 @@ import windIcon from './img/wind.png';
 import sunRiseIcon from './img/sunrise.png';
 import sunSetIcon from './img/sunset.png';
 import moonPhaseIcon from './img/moon.png';
+import leftArrowIcon from './img/arrow-left.png'
+import rightArrowIcon from './img/arrow-right.png'
 import { weather, forecast } from './weather.js';
 import { getDay, getHours, parseISO } from 'date-fns';
 
 let currentTimeFrame = 'daily';
 let currentTempUnit = 'F';
+let hourTracker = 0;
 
 window.onload = () => {
   document.getElementById("town-search").addEventListener("submit", () => {DOMControl.pageUpdates('new')});
@@ -19,6 +22,15 @@ window.onload = () => {
   document.getElementById("hourly-time").addEventListener("click", () => {DOMControl.displayTime();});
   document.getElementById("days-time").addEventListener("click", () => {DOMControl.displayTime();});
   document.getElementById("days-time").disabled = true;
+  document.getElementById('next-button').src = rightArrowIcon;
+  document.getElementById('next-button').addEventListener('click', () => {sliderMovement.nextSlide()});
+  document.getElementById('prev-button').src = leftArrowIcon;
+  document.getElementById('prev-button').addEventListener('click', () => {sliderMovement.prevSlide()});
+  let dots = document.querySelectorAll('.dots');
+  for (let i = 0; i < dots.length; i++) {
+    dots[i].addEventListener('click', () => {sliderMovement.slideJump(i)});
+  }
+  dots[0].classList.add('dot-active');
 };
 
 const DOMControl = (() => {
@@ -125,26 +137,41 @@ const DOMControl = (() => {
       }
     }
     else {
-      for (let i = 0; i < forecast.hourlyForecast.length; i++) {
-        let forecastElement = document.createElement('div');
-        let forecastTime = document.createElement('p');
-        let forecastTemp = document.createElement('h1');
-        let forecastIcon = document.createElement('img');
-
-        forecastElement.appendChild(forecastTime);
-        forecastElement.appendChild(forecastTemp);
-        forecastElement.appendChild(forecastIcon);
-        forecastElement.setAttribute('class', 'hour-card');
-
-        let hour = hourOfDay(getHours(parseISO(forecast.hourlyForecast[i].time)));
-        forecastTime.appendChild(document.createTextNode(hour));
-        (currentTempUnit === 'F' ? 
-        forecastTemp.appendChild(document.createTextNode(`${forecast.hourlyForecast[i].tempF} °F`)) 
-        : forecastTemp.appendChild(document.createTextNode(`${forecast.hourlyForecast[i].tempC} °C`)));
-        forecastIcon.src = forecast.hourlyForecast[i].weatherType;
-        timeCards.appendChild(forecastElement);
+      /*let arrowBack = document.createElement('img');
+      arrowBack.src = leftArrowIcon;
+      arrowBack.setAttribute('id', 'arrow-back');
+      arrowBack.addEventListener('click', () => {hourShift('back')});
+      timeCards.appendChild(arrowBack);*/
+      for (let i = 0; i < 8; i++) {
+        timeCards.appendChild(hourCard(i+ 8*hourTracker));
       }
+      /*let arrowForward = document.createElement('img');
+      arrowForward.src = rightArrowIcon;
+      arrowForward.setAttribute('id', 'arrow-forward');
+      arrowBack.addEventListener('click', () => {hourShift('forward')});
+      timeCards.appendChild(arrowForward);*/
     }
+  }
+
+  const hourCard = (i) => {
+    let forecastElement = document.createElement('div');
+    let forecastTime = document.createElement('p');
+    let forecastTemp = document.createElement('h1');
+    let forecastIcon = document.createElement('img');
+
+    forecastElement.appendChild(forecastTime);
+    forecastElement.appendChild(forecastTemp);
+    forecastElement.appendChild(forecastIcon);
+    forecastElement.setAttribute('class', 'hour-card');
+    forecastElement.classList.add(`${i}`);
+
+    let hour = hourOfDay(getHours(parseISO(forecast.hourlyForecast[i].time)));
+    forecastTime.appendChild(document.createTextNode(hour));
+    (currentTempUnit === 'F' ? 
+    forecastTemp.appendChild(document.createTextNode(`${forecast.hourlyForecast[i].tempF} °F`)) 
+    : forecastTemp.appendChild(document.createTextNode(`${forecast.hourlyForecast[i].tempC} °C`)));
+    forecastIcon.src = forecast.hourlyForecast[i].weatherType;
+    return forecastElement;
   }
 
   const convertTemp = () => {
@@ -175,12 +202,15 @@ const DOMControl = (() => {
   const displayTime = () => {
     let hourBTN = document.getElementById('hourly-time');
     let dayBTN = document.getElementById('days-time');
+    let BTNS = document.getElementById('buttons');
     if (currentTimeFrame === 'daily') {
+      BTNS.classList.remove('inactive');
       currentTimeFrame = 'hourly';
       hourBTN.disabled = true;
       dayBTN.disabled = false;
     }
     else {
+      BTNS.classList.add('inactive');
       currentTimeFrame = 'daily';
       hourBTN.disabled = false;
       dayBTN.disabled = true;
@@ -214,5 +244,45 @@ const DOMControl = (() => {
       return `${time} AM`;
     }
   }
-  return { pageUpdates, convertTemp, displayTime };
+  return { pageUpdates, convertTemp, displayTime, generateForecastCards };
+})();
+
+const sliderMovement = (() => {
+  const nextSlide = () => {
+    if (hourTracker === 2) {
+      return;
+    }
+    else {
+      hourTracker++;
+      DOMControl.generateForecastCards();
+      fillDot(hourTracker);
+      return;
+    }
+	};
+	
+	const prevSlide = () => {
+    if (hourTracker === 0) {
+      return;
+    }
+    else {
+      hourTracker--;
+      DOMControl.generateForecastCards();
+      fillDot(hourTracker);
+      return;
+    }
+	};
+	
+	const slideJump = (id) => {
+    hourTracker = id;
+    DOMControl.generateForecastCards();
+		fillDot(id);
+	};
+	
+	const fillDot = (id) => {
+    let dots = document.querySelectorAll('.dots');
+    dots.forEach(d => d.setAttribute('class', 'dots'));
+    dots[id].classList.add('dot-active');
+	};
+
+	return { nextSlide, prevSlide, slideJump };
 })();
