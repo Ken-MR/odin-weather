@@ -112,9 +112,15 @@ h1, h2, p {
 }
 
 #time-cards {
-  padding: 40px;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
+  gap: 12px;
+  font-size: 80%;
+}
+
+#time-cards > h1 {
+  font-size: 80%;
 }
 
 #hourly-time, #days-time {
