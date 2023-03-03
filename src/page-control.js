@@ -41,7 +41,6 @@ const DOMControl = (() => {
     weatherDisplay();
     generateForecastCards();
   }
-
   const eraseChildren = (element) => {
     while (element.firstChild) {
       element.removeChild(element.lastChild);
