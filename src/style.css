@@ -49,14 +49,17 @@ h1, h2, p {
   outline: none;
   border-bottom: 3px solid gray;
   box-shadow: none;
-  color:transparent;
-  cursor:default;
-  color: black;
+  cursor: default;
+  color: white;
   cursor: text;
 }
 
 #search:focus {
   background-color: rgba(252, 252, 252, 0.1);
+}
+
+#search::placeholder {
+  color: white;
 }
 
 .material-icons {
@@ -237,8 +240,23 @@ h1, h2, p {
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    gap: 30px;
     width: 300px;
+  }
+
+  .day-card > p {
+    width: 70px;
+  }
+
+  .hour-card > p {
+    width: 70px;
+  }
+
+  .day-card > h1 {
+    width: 85px;
+  }
+
+  .hour-card > h1 {
+    width: 85px;
   }
   
   #search {
