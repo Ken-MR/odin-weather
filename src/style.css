@@ -1,8 +1,11 @@
-body { 
-  background: url('./img/weather-background.jpg') no-repeat center center fixed; 
+body {
+  height: 100%;
+  width: 100%;
+  background: url('./img/weather-background.jpg') repeat center center; 
   background-size: cover;
   border: none;
   color: white;
+  background-attachment: scroll;
 }
 
 h1, h2, p {
@@ -12,11 +15,11 @@ h1, h2, p {
 
 #weather-page {
   padding: 30px;
+  width: 90vw;
   height: 95vh;
-  width: 95vw;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 5fr 1fr;
+  grid-template-rows: 4fr 1fr;
 }
 
 .main {
@@ -108,7 +111,7 @@ h1, h2, p {
 #time-cards {
   padding: 40px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 #hourly-time, #days-time {
@@ -154,4 +157,58 @@ h1, h2, p {
 .inactive {
   visibility: hidden;
   display: none;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 800px) {
+  body {
+    background-size: auto;
+  }
+
+  #buttons {
+    width: 80%;
+    height: 80%;
+  }
+  .main-info {
+    font-size: 85%;
+  }
+
+  #weather-page {
+    padding: 5px;
+    gap: 10px 0px;
+  }
+
+  .weather-card {
+    width: 150px;
+  }
+
+  .weather-card > div {
+    font-size: 80%;
+    position: relative;
+    right: 5px;
+  }
+
+  .weather-card > img {
+    width: 32px;
+    height: 32px;
+  }
+  
+  #time-cards {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .day-card, .hour-card {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    gap: 30px;
+  }
+  
+  #search {
+    width: 95%;
+  }
 }

@@ -1,7 +1,6 @@
 export let forecast;
 
 export const weather = (() => {
-  //let forecast;
 
   class Forecast {
     constructor(weatherData) {

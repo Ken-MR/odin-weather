@@ -137,19 +137,9 @@ const DOMControl = (() => {
       }
     }
     else {
-      /*let arrowBack = document.createElement('img');
-      arrowBack.src = leftArrowIcon;
-      arrowBack.setAttribute('id', 'arrow-back');
-      arrowBack.addEventListener('click', () => {hourShift('back')});
-      timeCards.appendChild(arrowBack);*/
       for (let i = 0; i < 8; i++) {
         timeCards.appendChild(hourCard(i+ 8*hourTracker));
       }
-      /*let arrowForward = document.createElement('img');
-      arrowForward.src = rightArrowIcon;
-      arrowForward.setAttribute('id', 'arrow-forward');
-      arrowBack.addEventListener('click', () => {hourShift('forward')});
-      timeCards.appendChild(arrowForward);*/
     }
   }
 
